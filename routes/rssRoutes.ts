@@ -1,9 +1,11 @@
 import express from "express";
 
-import { rssController } from "../controllers/rssController";
+import { rssItemsController } from "@/controllers/rssItemsController";
+import { rssContentController } from "@/controllers/contentController";
 
 const router = express.Router();
 
-router.post("/rss", rssController);
+router.post("/items", rssItemsController);
+router.post("/check", rssContentController);
 
 export default router;
