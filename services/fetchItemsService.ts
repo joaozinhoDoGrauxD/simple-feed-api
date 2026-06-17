@@ -2,14 +2,7 @@ import { fetchFeed } from "@/utils/fetchFeedService";
 import { dateService } from "@/utils/dateService";
 import Parser from "rss-parser";
 import type { Article } from "@/types/article.types";
-
-interface CustomItem extends Parser.Item {
-  description?: string;
-  itunes?: {
-    image?: string;
-    author?: string;
-  };
-}
+import type { CustomItem } from "@/types/customItem";
 
 export const fetchItems = async (
   url: string,

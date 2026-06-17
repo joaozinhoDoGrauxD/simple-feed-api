@@ -7,9 +7,17 @@ export const checkFile = async (
 ): Promise<FileType | string | boolean> => {
   if (file !== undefined) {
     if (/^https?:\/\//i.test(file)) {
+      // Otimização rápida baseada na extensão da URL antes de fazer requisições HTTP
+      if (hasAudio(file)) {
+        return FileType.Audio;
+      }
+      if (hasImage(file)) {
+        return FileType.Image;
+      }
+
       try {
         const response = await axios.head(file, {
-          timeout: 2000,
+          timeout: 1000,
           headers: {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
           },
@@ -27,7 +35,7 @@ export const checkFile = async (
       } catch {
         try {
           const response = await axios.get(file, {
-            timeout: 2000,
+            timeout: 1000,
             headers: {
               Range: "bytes=0-100",
               "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
