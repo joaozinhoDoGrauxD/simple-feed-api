@@ -7,7 +7,6 @@ export const contentCheck = async (
   const results: Record<string, string> = {};
   if (!items || items.length === 0) return results;
 
-  // Extrair todos os arquivos únicos que precisam ser validados
   const allFiles = new Set<string>();
   for (const item of items) {
     const att = [
@@ -23,7 +22,6 @@ export const contentCheck = async (
     }
   }
 
-  // Executar a checagem em paralelo para todos os arquivos únicos
   const filesArray = Array.from(allFiles);
   const checkPromises = filesArray.map(async (file) => {
     const type = await checkFile(file);

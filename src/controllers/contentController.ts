@@ -1,5 +1,5 @@
-import { contentCheck } from "@/services/contentCheckService";
-import { fetchItems } from "@/services/fetchItemsService";
+import { contentCheck } from "../services/contentCheckService";
+import { fetchItems } from "../services/fetchItemsService";
 import type { Request, Response } from "express";
 
 export const rssContentController = async (req: Request, res: Response) => {

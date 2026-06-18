@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import rssRoutes from "./routes/rssRoutes";
+import rssRoutes from "./src/routes/rssRoutes";
 const app = express();
 const PORT = 3000;
 app.use(cors());

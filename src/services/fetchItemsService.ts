@@ -2,7 +2,7 @@ import { fetchFeed } from "@/utils/fetchFeedService";
 import { dateService } from "@/utils/dateService";
 import Parser from "rss-parser";
 import type { Article } from "@/types/article.types";
-import type { CustomItem } from "@/types/customItem";
+import type { CustomItem } from "@/types/customItem.types";
 
 export const fetchItems = async (
   url: string,

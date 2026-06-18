@@ -2,7 +2,7 @@
   "compilerOptions": {
     // Environment setup & latest features
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./src/*"]
     },
     "lib": ["ESNext"],
     "target": "ESNext",
@@ -10,7 +10,7 @@
     "moduleDetection": "force",
     "jsx": "react-jsx",
     "allowJs": true,
-    "types": ["bun"],
+    "types": ["bun", "node", "express", "jest"],
 
     // Bundler mode
     "moduleResolution": "bundler",

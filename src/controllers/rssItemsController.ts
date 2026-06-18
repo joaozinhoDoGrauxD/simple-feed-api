@@ -1,4 +1,4 @@
-import { fetchItems } from "@/services/fetchItemsService";
+import { fetchItems } from "../services/fetchItemsService";
 import type { Request, Response } from "express";
 
 export const rssItemsController = async (req: Request, res: Response) => {

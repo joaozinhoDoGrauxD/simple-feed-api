@@ -7,7 +7,6 @@ export const checkFile = async (
 ): Promise<FileType | string | boolean> => {
   if (file !== undefined) {
     if (/^https?:\/\//i.test(file)) {
-      // Otimização rápida baseada na extensão da URL antes de fazer requisições HTTP
       if (hasAudio(file)) {
         return FileType.Audio;
       }
@@ -51,8 +50,8 @@ export const checkFile = async (
           if (contentType.startsWith("text/html")) {
             return FileType.HTML;
           }
-        } catch {
-          // Fallback to regex
+        } catch (err) {
+            console.error(err)
         }
       }
     }
