@@ -1,9 +1,8 @@
 import os from 'os';
-import loadBunTest from './loadModule';
+import loadBunTest from '@/utils/loadModule';
 import { describe, test, expect } from '@jest/globals';
 import type { GenericExpect } from '@/types/tests.types';
 
-// Definindo a estrutura de cada cenário individual
 interface TestCase {
   description: string;
   value: string;
@@ -15,9 +14,7 @@ export async function runMultiEnvTest(
   callback: (value: string, helpers: { expect: GenericExpect }) => void
 ) {
   if (os.platform() === 'win32') {
-    // Título único para o bloco do Jest
     describe(suiteTitle, () => {
-      // Loop cria um 'test' com descrição diferente para cada expect
       cases.forEach((c) => {
         test(c.description, () => {
           callback(c.value, { expect: expect as GenericExpect });
@@ -28,7 +25,6 @@ export async function runMultiEnvTest(
     try {
       const bun = await loadBunTest();
       if (bun) {
-        // Título único para o bloco do Bun
         bun.describe(suiteTitle, () => {
           cases.forEach((c) => {
             bun.test(c.description, () => {

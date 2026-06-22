@@ -3,7 +3,7 @@ import { Month, Weekday } from "@/enums/DateEnum";
 export const formatPublishedDate = (dateString: string): string => {
   if (!dateString) return "";
   const parts = dateString.split(" ");
-  if (parts.length < 5) return dateString; // Fallback se o formato for inesperado
+  if (parts.length < 5) return dateString; 
 
   const weekDayRaw = (parts[0] || "").replace(",", "") as keyof typeof Weekday;
   const day = parts[1] || "";
