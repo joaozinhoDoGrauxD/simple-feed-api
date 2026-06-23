@@ -1,4 +1,4 @@
-import { formatPublishedDate } from "@/utils/formatDateService";
+import { formatPublishedDate } from "@/utils/functions/formatDate";
 import type { Article } from "@/types/article.types";
 
 export const dateService = (items: Article[]): Article[] => {

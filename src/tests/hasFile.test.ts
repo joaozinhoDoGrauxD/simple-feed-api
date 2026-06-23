@@ -1,6 +1,6 @@
-import { runMultiEnvTest } from '@/utils/multiEnvRunner';
-import { hasAudio, hasImage, hasHTML } from '@/utils/hasFile';
-import { testCasesAudioTrue, testCasesAudioFalse, testCasesImageTrue, testCasesImageFalse, testCasesHtmlTrue, testCasesHtmlFalse} from '@/utils/testCases';
+import { runMultiEnvTest } from '@/utils/tests/multiEnvRunner';
+import { hasAudio, hasImage, hasHTML } from '@/utils/functions/hasFile';
+import { testCasesAudioTrue, testCasesAudioFalse, testCasesImageTrue, testCasesImageFalse, testCasesHtmlTrue, testCasesHtmlFalse} from '@/utils/testCases/testCasesHasFile';
 
 runMultiEnvTest('Suíte de Validação de Arquivos de Áudio', testCasesAudioTrue, (fileName, { expect }) => {
   expect(hasAudio(fileName)).toBe(true);

@@ -1,5 +1,5 @@
 import os from 'os';
-import loadBunTest from '@/utils/loadModule';
+import loadBunTest from '@/utils/tests/loadModule';
 import { describe, test, expect } from '@jest/globals';
 import type { GenericExpect } from '@/types/tests.types';
 

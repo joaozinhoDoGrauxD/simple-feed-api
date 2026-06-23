@@ -1,4 +1,4 @@
-import { checkFile } from "@/utils/checkFile";
+import { checkFile } from "@/utils/functions/checkFile";
 import type { Article } from "@/types/article.types";
 
 export const contentCheck = async (

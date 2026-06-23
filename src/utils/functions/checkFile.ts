@@ -1,4 +1,4 @@
-import { hasHTML, hasAudio, hasImage } from "@/utils/hasFile";
+import { hasHTML, hasAudio, hasImage } from "@/utils/functions/hasFile";
 import { FileType } from "@/enums/FileEnums";
 import axios from "axios";
 

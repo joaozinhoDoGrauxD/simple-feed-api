@@ -1,4 +1,4 @@
-import { audioExtensions, imageExtensions, name, exampleHtml, exampleNoHtml } from "@/utils/testConsts";
+import { audioExtensions, imageExtensions, name, exampleHtml, exampleNoHtml } from "@/utils/testConsts/testConstsHasFiles";
 export const testCasesAudioTrue = audioExtensions.map((ext) => ({
   description: `Deve validar com sucesso o formato de áudio: ${ext}`,
   value: name + ext 
