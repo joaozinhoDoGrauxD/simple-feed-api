@@ -3,7 +3,11 @@ import type { Article } from "@/types/article.types";
 
 export const dateService = (items: Article[]): Article[] => {
   items.forEach((item) => {
-    item.published = formatPublishedDate(item.published);
+    if (item.published) {
+      const dateObj = new Date(item.published);
+      item.timestamp = dateObj.getTime();
+      item.published = formatPublishedDate(item.published);
+    }
   });
   return items;
 };

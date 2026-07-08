@@ -4,6 +4,7 @@ export interface Article {
   content?: string;
   authors?: { name: string }[];
   published: string;
+  timestamp?: number;
   enclosures?: { url: string }[];
   itunes?: { image?: string };
 }
