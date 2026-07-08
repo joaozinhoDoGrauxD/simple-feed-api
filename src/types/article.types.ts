@@ -5,6 +5,7 @@ export interface Article {
   authors?: { name: string }[];
   published: string;
   timestamp?: number;
+  website?: string;
   enclosures?: { url: string }[];
   itunes?: { image?: string };
 }
