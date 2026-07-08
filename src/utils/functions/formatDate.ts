@@ -12,5 +12,5 @@ export const formatPublishedDate = (timestamp: number): string => {
   const weekDay = Weekday[weekDayRaw] || weekDayRaw;
   const month = Month[monthRaw] || monthRaw;
 
-  return `Postado em ${day} de ${month} em uma ${weekDay} de ${year} às ${time}`;
+  return `Postado em ${day} de ${month} na ${weekDay} em ${year} às ${time}`;
 };
