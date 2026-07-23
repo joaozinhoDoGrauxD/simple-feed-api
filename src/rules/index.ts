@@ -11,16 +11,20 @@ const rules: Record<string, RuleFn> = {
   "soundcloud.com": soundcloudRule,
 };
 
+
 export function applyRule(
   item: CustomItem,
   website?: string,
   rssChannel?: { title?: string }
 ): Partial<Article> {
+
   if (!website) return defaultRule(item);
 
   const domain = Object.keys(rules).find((d) => website.includes(d));
-  if (domain) {
-    return rules[domain](item, rssChannel);
+  const rule = domain ? rules[domain] : undefined;
+
+  if (rule) {
+    return rule(item, rssChannel);
   }
 
   return defaultRule(item);
