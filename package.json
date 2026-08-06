@@ -16,30 +16,14 @@
     "@types/bun": "latest",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
-    "@types/jest": "^30.0.0",
-    "cross-os": "^1.6.0",
-    "jest": "^30.4.2",
-    "ts-jest": "^29.4.12",
-    "typescript-eslint": "^8.65.0"
+    "typescript-eslint": "^8.66.0"
   },
   "peerDependencies": {
     "typescript": "^6.0.3"
   },
   "scripts": {
-    "start": "cross-os run",
-    "test": "cross-os try",
+    "start": "bun run --watch server.ts",
+    "test": "bun test",
     "lint": "eslint ."
-  },
-  "cross-os": {
-    "run": {
-      "win32": "npx tsx --tsconfig tsconfig.json server.ts",
-      "linux": "bun run --watch server.ts",
-      "mac": "bun run --watch server.ts"
-    },
-    "try": {
-      "win32": "jest",
-      "linux": "bun test",
-      "mac": "bun test"
-    }
   }
 }
