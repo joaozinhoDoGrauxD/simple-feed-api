@@ -10,7 +10,8 @@
     "jsx": "react-jsx",
     "allowJs": true,
     "types": ["bun", "node", "express"],
-
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
