@@ -127,7 +127,7 @@ export const deleteBookmarkController = async (req: AuthenticatedRequest, res: R
 
   try {
     const result = await bookmarkRepository.delete({
-      _id: new ObjectId(id),
+      id: new ObjectId(id),
       userId: req.userId!,
     });
 

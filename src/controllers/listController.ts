@@ -33,7 +33,7 @@ export const getListsController = async (req: AuthenticatedRequest, res: Respons
 };
 
 export const addUrlToListController = async (req: AuthenticatedRequest, res: Response) => {
-  const { id } = req.params;
+  const id = req.params.id as string;
   const { url } = req.body;
 
   if (!url) {
@@ -64,7 +64,7 @@ export const deleteListController = async (req: AuthenticatedRequest, res: Respo
 
   try {
     const result = await listRepository.delete({
-      _id: new ObjectId(id),
+      id: new ObjectId(id),
       userId: req.userId!,
     });
 

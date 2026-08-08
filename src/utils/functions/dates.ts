@@ -6,7 +6,7 @@ export const dateService = (items: Article[]): Article[] => {
     if (item.published) {
       const dateObj = new Date(item.published);
       item.timestamp = dateObj.getTime();
-      item.published = formatPublishedDate(item.published);
+      item.published = formatPublishedDate(item.timestamp);
     }
   });
   return items;
