@@ -20,4 +20,14 @@ app.use("/api/auth", authRoutes);
 app.use("/api/lists", listRoutes);
 app.use("/api/bookmarks", bookmarkRoutes);
 
+app.use('/health', require('express-healthcheck')({
+    healthy: function () {
+        return {
+            status: 'OK',
+            uptime: process.uptime(), 
+            timestamp: Date.now()
+        }
+    }
+}));
+
 export { app, PORT };
