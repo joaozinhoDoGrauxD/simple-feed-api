@@ -3,6 +3,7 @@ import {
   createListController,
   getListsController,
   addUrlToListController,
+  removeUrlFromListController,
   deleteListController,
 } from "@/controllers/listController";
 import { authMiddleware } from "@/middlewares/authMiddleware";
@@ -92,14 +93,46 @@ router.get("/", getListsController);
  *         description: Lista não encontrada
  *       401:
  *         description: Não autorizado
+ *   delete:
+ *     summary: Remove uma URL específica de dentro de uma lista
+ *     tags: [Lists]
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID da lista
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - url
+ *             properties:
+ *               url:
+ *                 type: string
+ *                 example: https://example.com/rss
+ *     responses:
+ *       200:
+ *         description: URL removida com sucesso
+ *       404:
+ *         description: Lista ou URL não encontrada
+ *       401:
+ *         description: Não autorizado
  */
 router.patch("/:id/urls", addUrlToListController);
+router.delete("/:id/urls", removeUrlFromListController);
 
 /**
  * @swagger
  * /api/lists/{id}:
  *   delete:
- *     summary: Deleta uma lista específica
+ *     summary: Deleta uma lista específica inteira
  *     tags: [Lists]
  *     security:
  *       - BearerAuth: []
