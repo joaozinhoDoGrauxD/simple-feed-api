@@ -50,6 +50,11 @@ export const addUrlToListController = async (req: AuthenticatedRequest, res: Res
       return res.status(404).json({ message: "Lista não encontrada" });
     }
 
+    // Verifica se a URL já existe no array de urls da lista
+    if (list.urls.includes(url)) {
+      return res.status(400).json({ message: "URL já está na lista" });
+    }
+
     list.urls.push(url);
     await listRepository.save(list);
 
