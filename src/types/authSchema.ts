@@ -21,3 +21,7 @@ export const loginSchema = z.object({
   password: z
     .string({ message: "A senha é obrigatória" }),
 });
+
+export const googleAuthSchema = z.object({
+  idToken: z.string({ message: "O idToken é obrigatório" }),
+});
