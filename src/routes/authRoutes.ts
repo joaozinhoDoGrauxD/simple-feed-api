@@ -1,5 +1,7 @@
 import express from "express";
 import { registerController, loginController } from "@/controllers/authController";
+import { validateSchema } from "@/middlewares/validateSchema";
+import { registerSchema, loginSchema } from "@/types/authSchema";
 
 const router = express.Router();
 
@@ -31,7 +33,7 @@ const router = express.Router();
  *       400:
  *         description: Usuário já existe ou campos inválidos
  */
-router.post("/register", registerController);
+router.post("/register", validateSchema(registerSchema), registerController);
 
 /**
  * @swagger
@@ -61,6 +63,6 @@ router.post("/register", registerController);
  *       400:
  *         description: Credenciais inválidas
  */
-router.post("/login", loginController);
+router.post("/login", validateSchema(loginSchema), loginController);
 
 export default router;

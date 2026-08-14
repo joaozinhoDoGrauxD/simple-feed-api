@@ -9,10 +9,6 @@ const userRepository = AppDataSource.getMongoRepository(User);
 export const registerController = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
-  if (!email || !password) {
-    return res.status(400).json({ message: "Email e senha são obrigatórios" });
-  }
-
   try {
     const existingUser = await userRepository.findOneBy({ email });
     if (existingUser) {
@@ -39,10 +35,6 @@ export const registerController = async (req: Request, res: Response) => {
 
 export const loginController = async (req: Request, res: Response) => {
   const { email, password } = req.body;
-
-  if (!email || !password) {
-    return res.status(400).json({ message: "Email e senha são obrigatórios" });
-  }
 
   try {
     const user = await userRepository.findOneBy({ email });

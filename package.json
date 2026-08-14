@@ -12,7 +12,8 @@
     "rss-parser": "^3.13.0",
     "swagger-jsdoc": "^6.3.0",
     "swagger-ui-express": "^5.0.1",
-    "typeorm": "^1.1.0"
+    "typeorm": "^1.1.0",
+    "zod": "^4.4.3"
   },
   "name": "simple-feed-api",
   "type": "module",
