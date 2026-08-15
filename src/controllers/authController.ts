@@ -3,15 +3,13 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { AppDataSource } from "@/config/data-source";
 import { User } from "@/entities/User";
+import { OAuth2Client } from "google-auth-library";
 
 const userRepository = AppDataSource.getMongoRepository(User);
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 export const registerController = async (req: Request, res: Response) => {
   const { email, password } = req.body;
-
-  if (!email || !password) {
-    return res.status(400).json({ message: "Email e senha são obrigatórios" });
-  }
 
   try {
     const existingUser = await userRepository.findOneBy({ email });
@@ -40,10 +38,6 @@ export const registerController = async (req: Request, res: Response) => {
 export const loginController = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
-  if (!email || !password) {
-    return res.status(400).json({ message: "Email e senha são obrigatórios" });
-  }
-
   try {
     const user = await userRepository.findOneBy({ email });
     if (!user) {
@@ -62,5 +56,51 @@ export const loginController = async (req: Request, res: Response) => {
   } catch (error) {
     console.error("Login Error:", error);
     return res.status(500).json({ message: "Erro ao realizar login" });
+  }
+};
+
+export const googleAuthController = async (req: Request, res: Response) => {
+  const { idToken } = req.body;
+
+  try {
+    // 1. Valida o ID Token permitindo o Client ID Web do Expo
+    const allowedAudiences = [
+      process.env.GOOGLE_CLIENT_ID,
+      process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID,
+    ].filter(Boolean) as string[];
+
+    const ticket = await googleClient.verifyIdToken({
+      idToken,
+      audience: allowedAudiences.length > 0 ? allowedAudiences : undefined,
+    });
+
+    const payload = ticket.getPayload();
+    if (!payload || !payload.email) {
+      return res.status(400).json({ message: "Token do Google inválido" });
+    }
+
+    const { email } = payload;
+
+    // 2. Busca ou cria o usuário mantendo seu User.ts (TypeORM + MongoDB)
+    let user = await userRepository.findOneBy({ email });
+
+    if (!user) {
+      user = userRepository.create({
+        email,
+        password: "", // Senha vazia pois foi via OAuth
+      });
+      await userRepository.save(user);
+    }
+
+    // 3. Extrai o ID do ObjectId do MongoDB com segurança
+    const userId = user.id ? user.id.toString() : (user as any)._id?.toString();
+
+    const secret = process.env.JWT_SECRET || "default_secret";
+    const token = jwt.sign({ userId }, secret, { expiresIn: "7d" });
+
+    return res.status(200).json({ token });
+  } catch (error) {
+    console.error("Google Auth Error:", error);
+    return res.status(500).json({ message: "Erro ao autenticar com o Google" });
   }
 };
