@@ -2,7 +2,6 @@ import { z } from "zod";
 
 export const registerSchema = z.object({
   email: z
-    .string({ message: "O e-mail é obrigatório" })
     .email("Formato de e-mail inválido"),
   password: z
     .string({ message: "A senha é obrigatória" })
@@ -16,7 +15,6 @@ export const registerSchema = z.object({
 
 export const loginSchema = z.object({
   email: z
-    .string({ message: "O e-mail é obrigatório" })
     .email("Formato de e-mail inválido"),
   password: z
     .string({ message: "A senha é obrigatória" }),

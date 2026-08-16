@@ -4,7 +4,7 @@
     "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
-    "eslint": "^10.8.0",
+    "eslint": "^10.8.1",
     "express": "^5.2.1",
     "express-healthcheck": "^0.1.0",
     "google-auth-library": "^11.0.2",
@@ -21,7 +21,7 @@
   "private": true,
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@faker-js/faker": "^10.5.0",
+    "@faker-js/faker": "^10.6.0",
     "@jest/globals": "^30.4.1",
     "@types/bcryptjs": "^3.0.0",
     "@types/bun": "latest",
@@ -30,7 +30,7 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.8",
-    "typescript-eslint": "^8.66.0"
+    "typescript-eslint": "^8.67.0"
   },
   "peerDependencies": {
     "typescript": "^6.0.3"

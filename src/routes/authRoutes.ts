@@ -65,5 +65,29 @@ router.post("/register", validateSchema(registerSchema), registerController);
  *         description: Credenciais inválidas
  */
 router.post("/login", validateSchema(loginSchema), loginController);
+/**
+ * @swagger
+ * /api/auth/google:
+ *   post:
+ *     summary: Realiza o login pelo OAUth 2.0 do Google
+ *     tags: [Auth]
+ *     requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *           type: object
+ *           required:
+ *             - idToken
+ *           properties:
+ *             idToken:
+ *              type: string
+ *              example: (Client ID) 
+ *     responses:
+ *       200:
+ *         description: Login bem-sucedido com retorno do token  do GoogleOAuth 2.0
+ *       400:
+ *         description: Não foi possível fazer o login com OAuth 2.0
+ */
 router.post("/google", validateSchema(googleAuthSchema), googleAuthController);
 export default router;
