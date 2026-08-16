@@ -8,6 +8,27 @@ import { OAuth2Client } from "google-auth-library";
 const userRepository = AppDataSource.getMongoRepository(User);
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
+const generateAuthToken = (userId: string) => {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    throw new Error("JWT_SECRET não foi definido");
+  }
+
+  const expiresIn = (process.env.JWT_EXPIRES_IN || "1d") as jwt.SignOptions["expiresIn"];
+
+  const token = jwt.sign({ userId }, secret, { expiresIn });
+
+  const decoded = jwt.decode(token) as { exp: number };
+  const expirationDate = new Date(decoded.exp * 1000);
+
+  return {
+    token,
+    expiry_raw: expiresIn,
+    expiry_timestamp: expirationDate.getTime(),
+    expiry_formatted_date: expirationDate.toLocaleString("pt-BR"),
+  };
+};
+
 export const registerController = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
@@ -25,10 +46,12 @@ export const registerController = async (req: Request, res: Response) => {
 
     await userRepository.save(user);
 
-    const secret = process.env.JWT_SECRET || "default_secret";
-    const token = jwt.sign({ userId: user.id.toString() }, secret, { expiresIn: "7d" });
+    const tokenData = generateAuthToken(user.id.toString());
 
-    return res.status(201).json({ message: "Usuário criado", token });
+    return res.status(201).json({
+      message: "Usuário criado",
+      ...tokenData,
+    });
   } catch (error) {
     console.error("Register Error:", error);
     return res.status(500).json({ message: "Erro ao registrar usuário" });
@@ -49,10 +72,9 @@ export const loginController = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "Credenciais inválidas" });
     }
 
-    const secret = process.env.JWT_SECRET || "default_secret";
-    const token = jwt.sign({ userId: user.id.toString() }, secret, { expiresIn: "7d" });
+    const tokenData = generateAuthToken(user.id.toString());
 
-    return res.status(200).json({ token });
+    return res.status(200).json(tokenData);
   } catch (error) {
     console.error("Login Error:", error);
     return res.status(500).json({ message: "Erro ao realizar login" });
@@ -94,11 +116,9 @@ export const googleAuthController = async (req: Request, res: Response) => {
 
     // 3. Extrai o ID do ObjectId do MongoDB com segurança
     const userId = user.id ? user.id.toString() : (user as any)._id?.toString();
+    const tokenData = generateAuthToken(userId);
 
-    const secret = process.env.JWT_SECRET || "default_secret";
-    const token = jwt.sign({ userId }, secret, { expiresIn: "7d" });
-
-    return res.status(200).json({ token });
+    return res.status(200).json(tokenData);
   } catch (error) {
     console.error("Google Auth Error:", error);
     return res.status(500).json({ message: "Erro ao autenticar com o Google" });

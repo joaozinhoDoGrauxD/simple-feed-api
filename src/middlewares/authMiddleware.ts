@@ -22,7 +22,12 @@ export const authMiddleware = (
   }
 
   const token = parts[1];
-  const secret = process.env.JWT_SECRET || "default_secret";
+  const secret = process.env.JWT_SECRET;
+
+  if (!secret) {
+    console.error("JWT_SECRET não definido");
+    return res.status(500).json({ message: "Erro interno no servidor" });
+  }
 
   try {
     const decoded = jwt.verify(token!, secret) as { userId: string };
