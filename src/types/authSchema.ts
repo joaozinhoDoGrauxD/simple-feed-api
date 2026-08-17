@@ -4,22 +4,21 @@ export const registerSchema = z.object({
   email: z
     .email("Formato de e-mail inválido"),
   password: z
-    .string({ message: "A senha é obrigatória" })
-    .min(6, "A senha deve ter pelo menos 6 caracteres")
-    /*
-    .regex(/[A-Z]/, "A senha deve conter pelo menos uma letra maiúscula")
-    .regex(/[a-z]/, "A senha deve conter pelo menos uma letra minúscula")
-    .regex(/[0-9]/, "A senha deve conter pelo menos um número")
-    .regex(/[^A-Za-z0-9]/, "A senha deve conter pelo menos um caractere especial")*/,
+    .string()
+    .min(6, { error: "A senha deve ter ao menos 6 caracteres" })
+    .nonempty({ error: "A senha deve ser obrigatória" })
+
 });
 
 export const loginSchema = z.object({
   email: z
     .email("Formato de e-mail inválido"),
   password: z
-    .string({ message: "A senha é obrigatória" }),
+    .string()
+    .min(6, { error: "A senha deve ter ao menos 6 caracteres" })
+    .nonempty({ error: "A  senha deve ser obrigatória" })
 });
 
 export const googleAuthSchema = z.object({
-  idToken: z.string({ message: "O idToken é obrigatório" }),
+  idToken: z.string({ error: "O idToken é obrigatório" }),
 });

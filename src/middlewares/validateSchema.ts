@@ -12,7 +12,7 @@ export const validateSchema = (schema: ZodType) => {
           message: "Erro de validação",
           errors: error.issues.map((err) => ({
             field: err.path.join("."),
-            message: err.message,
+            message: err.message
           })),
         });
       }
