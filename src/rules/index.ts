@@ -1,31 +1,20 @@
 import { youtubeRule } from "./youtube";
 import { soundcloudRule } from "./soundcloud";
 import { defaultRule } from "./default";
-import type { Article } from "@/types/article.types";
-import type { CustomItem } from "@/types/customItem.types";
+import type { SiteRule } from "./types";
 
-type RuleFn = (item: CustomItem, rssChannel?: { title?: string }) => Partial<Article>;
+const rulesList: SiteRule[] = [
+  youtubeRule,
+  soundcloudRule,
+];
 
-const rules: Record<string, RuleFn> = {
-  "youtube.com": youtubeRule,
-  "soundcloud.com": soundcloudRule,
-};
+export function getRuleForWebsite(website?: string): SiteRule {
+  if (!website) return defaultRule;
 
+  // Normaliza e verifica se o domínio configurado faz parte do hostname extraído
+  const foundRule = rulesList.find((rule) =>
+    website.toLowerCase().includes(rule.domain.toLowerCase())
+  );
 
-export function applyRule(
-  item: CustomItem,
-  website?: string,
-  rssChannel?: { title?: string }
-): Partial<Article> {
-
-  if (!website) return defaultRule(item);
-
-  const domain = Object.keys(rules).find((d) => website.includes(d));
-  const rule = domain ? rules[domain] : undefined;
-
-  if (rule) {
-    return rule(item, rssChannel);
-  }
-
-  return defaultRule(item);
+  return foundRule || defaultRule;
 }
