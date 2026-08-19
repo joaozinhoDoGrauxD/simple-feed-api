@@ -1,6 +1,10 @@
 import { z } from "zod";
 
 export const registerSchema = z.object({
+  username:z 
+    .string()
+    .min(6, {error: "O username deve ter ao menos 6 caracteres"})
+    .nonempty({error: "O username deve ser obrigatório"}),
   email: z
     .email("Formato de e-mail inválido"),
   password: z

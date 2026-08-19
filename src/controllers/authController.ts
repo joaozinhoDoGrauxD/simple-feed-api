@@ -30,7 +30,7 @@ const generateAuthToken = (userId: string) => {
 };
 
 export const registerController = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
+  const { username, email, password, role } = req.body;
 
   try {
     const existingUser = await userRepository.findOneBy({ email });
@@ -40,8 +40,10 @@ export const registerController = async (req: Request, res: Response) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = userRepository.create({
+      username,
       email,
       password: hashedPassword,
+      role
     });
 
     await userRepository.save(user);
