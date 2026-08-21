@@ -9,7 +9,7 @@ const router = express.Router();
  * @swagger
  * /api/rss/items:
  *   post:
- *     summary: Busca e processa os itens de um feed RSS/Atom
+ *     summary: Busca e processa itens de múltiplos feeds RSS/Atom
  *     tags: [RSS]
  *     requestBody:
  *       required: true
@@ -18,16 +18,23 @@ const router = express.Router();
  *           schema:
  *             type: object
  *             required:
- *               - url
+ *               - urls
  *             properties:
- *               url:
+ *               urls:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 example: ["https://www.example.com/rss", https://another.example.com/rss"]
+ *               sort:
  *                 type: string
- *                 example: https://www.example.com/rss
+ *                 enum: [timestamp, source]
+ *                 default: timestamp
+ *                 description: Define como os dados serão exibidos (cronológico por timestamp ou agrupado por source).
  *     responses:
  *       200:
- *         description: Itens do RSS retornados com sucesso
+ *         description: Lista ou objeto agrupado de itens retornado com sucesso
  *       400:
- *         description: URL obrigatória ausente
+ *         description: Parâmetros inválidos ou URLs ausentes
  */
 router.post("/items", rssItemsController);
 
