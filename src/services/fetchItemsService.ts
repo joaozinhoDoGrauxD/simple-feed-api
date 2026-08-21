@@ -3,15 +3,13 @@ import { dateService } from "@/utils/functions/dates";
 import Parser from "rss-parser";
 import type { Article } from "@/types/article.types";
 import type { CustomItem } from "@/types/customItem.types";
-import { extractWebsite } from "@/utils/functions/extractWebsite";
-import { getRuleForWebsite } from "@/rules";
+import { getRuleForUrl } from "@/rules";
 
 export const fetchItems = async (
   url: string,
 ): Promise<Article[] | undefined> => {
   try {
-    const website = extractWebsite(url);
-    const rule = getRuleForWebsite(website);
+    const rule = getRuleForUrl(url);
 
     const ruleCustomFields = rule.customFields?.item || [];
     const customFields = [
@@ -33,7 +31,6 @@ export const fetchItems = async (
     const filteredItems: Article[] = items.map((item) => {
       const rawDate = item.pubDate || item.isoDate || "";
       const timestamp = rawDate ? new Date(rawDate).getTime() : undefined;
-      const itemWebsite = item.link ? extractWebsite(item.link) : website;
 
       // Executa a transformação da regra
       const ruleApplied = rule.transform(item, {
@@ -48,7 +45,6 @@ export const fetchItems = async (
         content: ruleApplied.content !== undefined ? ruleApplied.content : item.content,
         date: rawDate,
         timestamp,
-        website: itemWebsite,
         ...ruleApplied,
       };
 

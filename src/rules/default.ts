@@ -15,7 +15,7 @@ export const defaultRule: SiteRule = {
     return {
       author: item.creator ? { username: item.creator } : undefined,
       media: images.length > 0 ? [{ images }] : undefined,
-      category: "general",
+      sourceType: "general",
     };
   },
 };

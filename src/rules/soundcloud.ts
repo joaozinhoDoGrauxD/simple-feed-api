@@ -51,13 +51,13 @@ export const soundcloudRule: SiteRule = {
       }
 
     return {
-      pseudoId: trackId ? `soundcloud:track:${trackId}` : undefined,
+      siteId: trackId ? `${trackId}` : undefined,
       description,
       content: undefined,
       author: publisher ? { username: publisher } : undefined,
       media: mediaObj.length > 0 ? mediaObj : undefined,
-      category: "soundcloud",
-      subcategory: "track",
+      source: "soundcloud",
+      sourceType: "track",
     };
   },
 };

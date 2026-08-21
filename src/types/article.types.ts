@@ -11,12 +11,7 @@ export interface Media {
 }
 
 export interface Article {
-  // pseudoId são apenas IDs para que o sistema possa ter um dado
-  // unico para que se possa referir. Isto provavelmente nunca
-  // será realmente usado, mais adicionei um para casos futuros.
-  // 
-  // a logica seria "{site}:{subcategoria}:{id-no-site}"
-  pseudoId?: string;
+  siteId?: string;
   url: string;
   title: string;
   description: string;
@@ -26,7 +21,6 @@ export interface Article {
   date: string;
   formattedDate?: string;
   timestamp?: number;
-  website?: string;
-  category?: string;
-  subcategory?: string;
+  source?: string;
+  sourceType?: string;
 }

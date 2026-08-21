@@ -8,12 +8,11 @@ const rulesList: SiteRule[] = [
   soundcloudRule,
 ];
 
-export function getRuleForWebsite(website?: string): SiteRule {
-  if (!website) return defaultRule;
+export function getRuleForUrl(url: string): SiteRule {
+  if (!url) return defaultRule;
 
-  // Normaliza e verifica se o domínio configurado faz parte do hostname extraído
   const foundRule = rulesList.find((rule) =>
-    website.toLowerCase().includes(rule.domain.toLowerCase())
+    url.toLowerCase().includes(rule.domain.toLowerCase())
   );
 
   return foundRule || defaultRule;

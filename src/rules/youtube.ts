@@ -11,9 +11,8 @@ export const youtubeRule: SiteRule = {
       ["yt:videoId", "videoId"],
       ["yt:channelId", "channelId"],
       ["author", "authorObj"],
-      // Mantemos a chave "media:group" sem renomear para casar com a estrutura nativa do parser
-      "media:group",
       ["media:group", "mediaGroup"],
+      ["media:description", "mediaDescription"],
     ],
   },
   transform: (item: CustomItem): Partial<Article> => {
@@ -71,15 +70,15 @@ export const youtubeRule: SiteRule = {
     }
 
     return {
-      pseudoId: item.videoId ? `youtube:video:${item.videoId}` : undefined,
+      siteId: item.videoId ? `${item.videoId}` : undefined,
       description,
       author: {
         username,
         authorUrl: channelId ? `https://www.youtube.com/channel/${channelId}` : undefined,
       },
       media: images.length > 0 ? [{ images }] : undefined,
-      category: "youtube",
-      subcategory: "video",
+      source: "youtube",
+      sourceType: "video",
     };
   },
 };
