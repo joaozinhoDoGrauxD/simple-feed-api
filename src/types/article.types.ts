@@ -1,11 +1,26 @@
+export interface Author {
+  username: string;
+  // TODO: extract author icon (maybe)
+  authorUrl?: string;
+}
+
+export interface Media {
+  images?: string[];
+  audio?: string[];
+  video?: string[];
+}
+
 export interface Article {
+  siteId?: string;
+  url: string;
   title: string;
   description: string;
   content?: string;
-  authors?: { name: string }[];
-  published: string;
+  author?: Author;
+  media?: Media[];
+  date: string;
+  formattedDate?: string;
   timestamp?: number;
-  website?: string;
-  enclosures?: { url: string }[];
-  itunes?: { image?: string };
+  source?: string;
+  sourceType?: string;
 }
