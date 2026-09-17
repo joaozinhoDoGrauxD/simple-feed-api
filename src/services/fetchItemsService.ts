@@ -15,9 +15,14 @@ export const fetchItems = async (
     urls.map(async (url) => {
       const rule = getRuleForUrl(url);
       const ruleCustomFields = rule.customFields?.item || [];
+      
+      // Mapeia todas as possíveis variações de tags de resumo/conteúdo do RSS
       const customFields = [
         ["content:encoded", "content"],
         ["contentEncoded", "content"],
+        ["summary", "summary"],
+        ["description", "description"],
+        ["content", "content"],
         ...ruleCustomFields,
       ];
 
@@ -38,10 +43,18 @@ export const fetchItems = async (
           "itunes:image": rss["itunes:image"],
         });
 
+        // Tenta capturar o texto principal através de qualquer tag populada
+        const extractedDescription =
+          ruleApplied.description ??
+          item.description ??
+          (item as any).summary ??
+          item.content ??
+          "";
+
         const article: Article = {
           url: item.link || url,
           title: item.title || "",
-          description: ruleApplied.description ?? item.description ?? "",
+          description: extractedDescription,
           content: ruleApplied.content !== undefined ? ruleApplied.content : item.content,
           date: rawDate,
           timestamp,
@@ -49,7 +62,7 @@ export const fetchItems = async (
           ...ruleApplied,
         };
 
-        if (ruleApplied.content === undefined) {
+        if (ruleApplied.content === undefined && !item.content) {
           delete article.content;
         }
 
