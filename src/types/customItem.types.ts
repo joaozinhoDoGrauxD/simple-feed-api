@@ -1,9 +1,8 @@
 import Parser from "rss-parser";
 
+// Permitimos indexação dinâmica pois os customFields podem injetar propriedades diversas
+
+// TODO: re-add itunes later
 export interface CustomItem extends Parser.Item {
-  description?: string;
-  itunes?: {
-    image?: string;
-    author?: string;
-  };
+  [key: string]: any; 
 }
